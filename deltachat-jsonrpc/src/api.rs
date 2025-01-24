@@ -2157,7 +2157,7 @@ impl CommandApi {
 
     // mimics the old desktop call, will get replaced with something better in the composer rewrite,
     // the better version will just be sending the current draft, though there will be probably something similar with more options to this for the corner cases like setting a marker on the map
-    #[allow(clippy::too_many_arguments)]
+    #[expect(clippy::too_many_arguments)]
     async fn misc_send_msg(
         &self,
         account_id: u32,
@@ -2204,7 +2204,7 @@ impl CommandApi {
     // the better version should support:
     // - changing viewtype to enable/disable compression
     // - keeping same message id as long as attachment does not change for webxdc messages
-    #[allow(clippy::too_many_arguments)]
+    #[expect(clippy::too_many_arguments)]
     async fn misc_set_draft(
         &self,
         account_id: u32,
