@@ -1691,7 +1691,17 @@ async fn build_avatar_file(context: &Context, path: &str) -> Result<String> {
         false => BlobObject::from_path(context, path.as_ref())?,
     };
     let body = fs::read(blob.to_abs_path()).await?;
-    let encoded_body = base64::engine::general_purpose::STANDARD.encode(&body);
+    let encoded_body = base64::engine::general_purpose::STANDARD
+        .encode(&body)
+        .chars()
+        .enumerate()
+        .fold(String::new(), |mut res, (i, c)| {
+            if i % 78 == 77 {
+                res.push(' ')
+            }
+            res.push(c);
+            res
+        });
     Ok(encoded_body)
 }
 
