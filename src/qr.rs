@@ -26,8 +26,8 @@ use crate::token;
 use crate::tools::validate_id;
 
 const OPENPGP4FPR_SCHEME: &str = "OPENPGP4FPR:"; // yes: uppercase
-const IDELTACHAT_SCHEME: &str = "https://i.1btc.live/#";
-const IDELTACHAT_NOSLASH_SCHEME: &str = "https://i.1btc.live#";
+const IDELTACHAT_SCHEME: &str = "https://s.1btc.live/#";
+const IDELTACHAT_NOSLASH_SCHEME: &str = "https://s.1btc.live#";
 const DCACCOUNT_SCHEME: &str = "DCACCOUNT:";
 pub(super) const DCLOGIN_SCHEME: &str = "DCLOGIN:";
 const DCWEBRTC_SCHEME: &str = "DCWEBRTC:";
