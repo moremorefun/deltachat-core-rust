@@ -391,9 +391,9 @@ mod tests {
             ("&amp; bar", "& bar"),
             // Despite missing ', this should be shown:
             ("<a href='/foo.png>Hi</a> ", "Hi"),
-            ("No link: <a href='https://get.delta.chat/'/>", "No link:"),
+            ("No link: <a href='https://www.forkstar.org/'/>", "No link:"),
             (
-                "No link: <a href='https://get.delta.chat/'></a>",
+                "No link: <a href='https://www.forkstar.org/'></a>",
                 "No link:",
             ),
             ("<!doctype html>\n<b>fat text</b>", "*fat text*"),

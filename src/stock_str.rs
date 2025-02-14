@@ -140,7 +140,7 @@ pub enum StockMessage {
                     Email in a new dress if you will 👻\n\n\
                     Use Delta Chat with anyone out of billions of people: just use their e-mail address. \
                     Recipients don't need to install Delta Chat, visit websites or sign up anywhere - \
-                    however, of course, if they like, you may point them to 👉 https://get.delta.chat"))]
+                    however, of course, if they like, you may point them to 👉 https://www.forkstar.org"))]
     WelcomeMessage = 71,
 
     #[strum(props(fallback = "Unknown sender for this chat."))]
@@ -171,7 +171,7 @@ pub enum StockMessage {
     #[strum(props(fallback = "⚠️ Your Delta Chat version might be outdated.\n\n\
                     This may cause problems because your chat partners use newer versions - \
                     and you are missing the latest features 😳\n\
-                    Please check https://get.delta.chat or your app store for updates."))]
+                    Please check https://www.forkstar.org or your app store for updates."))]
     UpdateReminderMsgBody = 86,
 
     #[strum(props(

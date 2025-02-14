@@ -7009,7 +7009,7 @@ void dc_event_unref(dc_event_t* event);
 /// - %1$s will be replaced by a date/time string as YY-mm-dd HH:MM:SS
 #define DC_STR_BAD_TIME_MSG_BODY          85
 
-/// "Your Delta Chat version might be outdated, check https://get.delta.chat for updates."
+/// "Your Delta Chat version might be outdated, check https://www.forkstar.org for updates."
 ///
 /// Used as device message if the used version is probably outdated.
 #define DC_STR_UPDATE_REMINDER_MSG_BODY   86
