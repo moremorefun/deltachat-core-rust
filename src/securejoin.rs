@@ -119,7 +119,7 @@ pub async fn get_securejoin_qr(context: &Context, group: Option<ChatId>) -> Resu
             context.scheduler.interrupt_inbox().await;
         }
         format!(
-            "https://s.1mailcoin.org/#{}&a={}&n={}&i={}&s={}",
+            "https://s.mailcoin.org/#{}&a={}&n={}&i={}&s={}",
             fingerprint.hex(),
             self_addr_urlencoded,
             self_name_urlencoded,
