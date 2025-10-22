@@ -926,6 +926,11 @@ impl MimeFactory {
                         unprotected_headers.push(header);
                     }
                     _ => {
+                        // Custom X- headers are kept in unprotected part
+                        // to allow server-side processing (e.g., blockchain transactions)
+                        if header_name.starts_with("x-") {
+                            unprotected_headers.push(header);
+                        }
                         // Other headers are removed from unprotected part.
                     }
                 }
