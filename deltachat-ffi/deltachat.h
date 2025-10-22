@@ -4964,6 +4964,27 @@ uint32_t        dc_msg_get_saved_msg_id     (const dc_msg_t* msg);
 void            dc_msg_force_plaintext        (dc_msg_t* msg);
 
 /**
+ * Set a custom email header on a message.
+ * Only headers starting with "X-" are allowed.
+ *
+ * @memberof dc_msg_t
+ * @param msg The message object.
+ * @param key The header name (must start with "X-").
+ * @param value The header value.
+ * @return 1 on success, 0 on failure.
+ */
+int             dc_msg_set_custom_header      (dc_msg_t* msg, const char* key, const char* value);
+
+/**
+ * Get all custom headers as a JSON string.
+ *
+ * @memberof dc_msg_t
+ * @param msg The message object.
+ * @return JSON string of custom headers, or NULL if none are set. Must be freed using dc_str_unref().
+ */
+char*           dc_msg_get_custom_headers     (const dc_msg_t* msg);
+
+/**
  * @class dc_contact_t
  *
  * An object representing a single contact in memory.

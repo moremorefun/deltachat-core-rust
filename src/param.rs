@@ -205,6 +205,13 @@ pub enum Param {
 
     /// For messages: Whether [crate::message::Viewtype::Sticker] should be forced.
     ForceSticker = b'X',
+
+    /// For Messages: Custom email headers in JSON format.
+    /// Stored as a JSON object where keys are header names and values are header values.
+    /// Example: {"X-Blockchain-Type": "ethereum", "X-Blockchain-Tx": "0x..."}
+    ///
+    /// Only headers starting with "X-" are allowed to prevent conflicts with standard headers.
+    CustomHeaders = b'M',
     // 'L' was defined as ProtectionSettingsTimestamp for Chats, however, never used in production.
 }
 

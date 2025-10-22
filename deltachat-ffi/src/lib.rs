@@ -4079,6 +4079,44 @@ pub unsafe extern "C" fn dc_msg_force_plaintext(msg: *mut dc_msg_t) {
     ffi_msg.message.force_plaintext();
 }
 
+#[no_mangle]
+pub unsafe extern "C" fn dc_msg_set_custom_header(
+    msg: *mut dc_msg_t,
+    key: *const libc::c_char,
+    value: *const libc::c_char,
+) -> libc::c_int {
+    if msg.is_null() {
+        eprintln!("ignoring careless call to dc_msg_set_custom_header()");
+        return 0;
+    }
+
+    let key_str = to_string_lossy(key);
+    let value_str = to_string_lossy(value);
+
+    let ffi_msg = &mut *msg;
+    match ffi_msg.message.set_custom_header(&key_str, &value_str) {
+        Ok(_) => 1,
+        Err(err) => {
+            eprintln!("dc_msg_set_custom_header failed: {}", err);
+            0
+        }
+    }
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn dc_msg_get_custom_headers(msg: *const dc_msg_t) -> *mut libc::c_char {
+    if msg.is_null() {
+        eprintln!("ignoring careless call to dc_msg_get_custom_headers()");
+        return ptr::null_mut();
+    }
+
+    let ffi_msg: &MessageWrapper = &*msg;
+    ffi_msg
+        .message
+        .get_custom_headers()
+        .map_or_else(ptr::null_mut, |s| s.strdup())
+}
+
 // dc_contact_t
 
 /// FFI struct for [dc_contact_t]

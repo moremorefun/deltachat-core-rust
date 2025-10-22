@@ -711,6 +711,24 @@ impl MimeFactory {
         // Non-standard headers.
         headers.push(Header::new("Chat-Version".to_string(), "1.0".to_string()));
 
+        // Add custom email headers
+        if let Loaded::Message { msg, .. } = &self.loaded {
+            if let Some(custom_headers_json) = msg.param.get(Param::CustomHeaders) {
+                if let Ok(custom_headers) =
+                    serde_json::from_str::<serde_json::Map<String, serde_json::Value>>(custom_headers_json)
+                {
+                    for (key, value) in custom_headers {
+                        if let Some(value_str) = value.as_str() {
+                            // Only add X- headers
+                            if key.starts_with("X-") {
+                                headers.push(Header::new(key.into(), value_str.to_string()));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         if self.req_mdn {
             // we use "Chat-Disposition-Notification-To"
             // because replies to "Disposition-Notification-To" are weird in many cases

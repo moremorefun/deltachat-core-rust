@@ -1192,6 +1192,63 @@ impl Message {
         self.param.set_int(Param::Reaction, 1);
     }
 
+    /// Set a custom email header.
+    ///
+    /// This allows adding arbitrary custom email headers that will be included
+    /// when the message is sent. Only headers starting with "X-" are allowed.
+    ///
+    /// # Arguments
+    /// * `key` - The header name (must start with "X-")
+    /// * `value` - The header value
+    ///
+    /// # Examples
+    /// ```
+    /// # use deltachat::message::Message;
+    /// # use deltachat::chat::Viewtype;
+    /// let mut msg = Message::new(Viewtype::Text);
+    /// msg.set_custom_header("X-Blockchain-Type", "ethereum").unwrap();
+    /// msg.set_custom_header("X-Blockchain-Tx", "0xf86c80...").unwrap();
+    /// ```
+    pub fn set_custom_header(&mut self, key: &str, value: &str) -> Result<()> {
+        // Validate header name (must start with X-)
+        ensure!(
+            key.starts_with("X-"),
+            "Custom header names must start with 'X-'"
+        );
+
+        // Read existing custom headers
+        let mut headers: serde_json::Map<String, serde_json::Value> =
+            if let Some(json_str) = self.param.get(Param::CustomHeaders) {
+                serde_json::from_str(json_str)
+                    .unwrap_or_else(|_| serde_json::Map::new())
+            } else {
+                serde_json::Map::new()
+            };
+
+        // Add or update header
+        headers.insert(
+            key.to_string(),
+            serde_json::Value::String(value.to_string())
+        );
+
+        // Save back to params
+        let json_str = serde_json::to_string(&headers)?;
+        self.param.set(Param::CustomHeaders, json_str);
+
+        Ok(())
+    }
+
+    /// Get all custom headers as a JSON string.
+    ///
+    /// Returns a JSON object containing all custom headers set on this message.
+    /// Example return value: `{"X-Blockchain-Type": "ethereum", "X-Blockchain-Tx": "0x..."}`
+    ///
+    /// # Returns
+    /// JSON string of custom headers, or `None` if none are set.
+    pub fn get_custom_headers(&self) -> Option<String> {
+        self.param.get(Param::CustomHeaders).map(|s| s.to_string())
+    }
+
     /// Changes the message width, height or duration,
     /// and stores it into the database.
     pub async fn latefiling_mediasize(
