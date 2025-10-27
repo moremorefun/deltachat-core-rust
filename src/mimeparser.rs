@@ -848,6 +848,27 @@ impl MimeMessage {
             }
         }
 
+        // Extract custom X- headers from received messages (preserve original case)
+        let mut custom_headers = serde_json::Map::new();
+        for (key, value) in &self.headers {
+            if key.starts_with("x-") || key.starts_with("X-") {
+                // Keep original key as-is
+                custom_headers.insert(
+                    key.clone(),
+                    serde_json::Value::String(value.clone())
+                );
+            }
+        }
+
+        // Save custom headers to all parts if any were found
+        if !custom_headers.is_empty() {
+            if let Ok(json_str) = serde_json::to_string(&custom_headers) {
+                for part in &mut self.parts {
+                    part.param.set(Param::CustomHeaders, &json_str);
+                }
+            }
+        }
+
         Ok(())
     }
 
